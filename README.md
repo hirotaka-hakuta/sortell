@@ -1,24 +1,40 @@
-# README
+# アノニマウス
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+匿名情報共有サイト
 
-Things you may want to cover:
+### サイトテーマ
+Twitterやラインのような機能を持つサイト。
+通常の投稿は全体に共有され、タグ付けをするとそのタグに所属している人しか見ることは出来ない。
+ラインやTwitterではグループを切り替えなければ別グループへの会話が出来ないが、
+同じ投稿フォームからタグ設定することでグループを切り替えるようなイメージ。
 
-* Ruby version
 
-* System dependencies
+### テーマを選んだ理由
+仕事でつかえるような機能を持つものを作りたいと考え、業務用Twitterのイメージでテーマを決めました。
 
-* Configuration
 
-* Database creation
+### ターゲットユーザ
+多人数で情報共有する必要があるが、部署ごとの指示系統も作りたい人
 
-* Database initialization
 
-* How to run the test suite
+### 主な利用シーン
+課長が係長と一般社員へ別々の連絡事項がある場合、係長のタグでAを連絡し、
+その後係長と一般社員のタグ(若しくはその課のタグ)でBを連絡する。
 
-* Services (job queues, cache servers, search engines, etc.)
+## 設計書
+未制作
 
-* Deployment instructions
+## チャレンジ要素一覧
+https://docs.google.com/spreadsheets/d/17tmlqbwftpOp6hM_zPKUmcKENfP-okeIz84RtoIB5go/edit#gid=0
 
-* ...
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
+
+## 使用素材
+- 外部サービスの画像素材・音声素材を使用した場合は、必ずサービス名とURLを明記してください。
+- 使用しない場合は、使用素材の項目をREADMEから削除してください。
