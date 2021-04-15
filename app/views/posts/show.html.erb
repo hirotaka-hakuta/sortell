@@ -8,6 +8,19 @@
   <% if @post.user == current_user %>
     <%= link_to "削除", post_path(@post), method: :delete %>
   <% end %>
+    <% if @post.checkerd_by?(current_user) %>
+    <p>
+      <%= link_to post_checkers_path(@post), method: :delete do %>
+        〇:<%= @post.checkers.count %>人確認済み
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to post_checkers_path(@post), method: :post do %>
+        ― 未確認:<%= @post.checkers.count %>人確認済み
+      <% end %>
+    </p>
+  <% end %>
 </div>
 
 <div class="comments">
@@ -25,6 +38,6 @@
   <%= f.text_field :comment, rows:'5',placeholder: "コメントをここに" %>
   <%= f.submit "送信する" %>
     PostComment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    redirect_to post_image_path(params[:post_id])
+    redirect_to post_path(params[:post_id])
 <% end %>
 </div>
