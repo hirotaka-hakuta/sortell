@@ -1,24 +1,30 @@
-# README
+# ソーテル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+Twitterやラインのような機能を持つサイト。
+通常の投稿は全体に共有され、タグ付けをするとそのタグに所属している人しか見ることは出来ない。
+ラインやTwitterではグループを切り替えなければ別グループへの会話が出来ないが、
+同じ投稿フォームからタグ設定することでグループを切り替えるようなイメージ。
 
-Things you may want to cover:
+### サイトテーマ
+情報共有サイト
 
-* Ruby version
+### テーマを選んだ理由
+仕事でつかえるような機能を持つものを作りたいと考え、業務用Twitterのイメージでテーマを決めました。
 
-* System dependencies
+### ターゲットユーザ
+自社内で頻繁に情報のやり取りをする企業
 
-* Configuration
+### 主な利用シーン
+- 多人数で情報共有する必要があるが、部署ごとの指示系統も作りたい時
+- リアルタイムで複数人と意見の交換をしたい時
 
-* Database creation
+## 機能一覧
+https://docs.google.com/spreadsheets/d/17tmlqbwftpOp6hM_zPKUmcKENfP-okeIz84RtoIB5go/edit#gid=0
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Cloud9
