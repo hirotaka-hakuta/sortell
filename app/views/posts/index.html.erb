@@ -1,0 +1,16 @@
+<h1>Posts#index</h1>
+<p>Find me in app/views/posts/index.html.erb</p>
+<% @posts.each do |post| %>
+
+    <div>
+        <%=link_to post_path(post.id) do%>
+        <%unless post.image_id==nil%>
+            <%= attachment_image_tag post, :image %>
+        <%end%>
+
+        <p>投稿内容：<%= post.post_text %></p>
+     <% end %>     
+        <p>ユーザーネーム：<%= post.user.name %></p>
+    </div>
+
+<% end %>
