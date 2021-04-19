@@ -1,10 +1,13 @@
 <h1>Posts#show</h1>
 <p>Find me in app/views/posts/show.html.erb</p>
-<div class="post-body">
-  <%= attachment_image_tag @post, :image %>
+<div class="container">
+  <div class="row">
+<div class="post-body clo-sm-8">
+  <%= attachment_image_tag @post, :image ,width: '80%', height: '80%' %>
   <p><%= @post.post_text %></p>
-  <p>ユーザーネーム：<%= @post.user.name %></p>
+  <p>投稿者：<%= @post.user.name %></p>
   <p>投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+  
   <% if @post.user == current_user %>
     <%= link_to "削除", post_path(@post), method: :delete %>
   <% end %>
@@ -27,12 +30,18 @@
   <!--ここも部分テンプレート化する-->
   <!--コメントに対するコメントも出来るようにすること-->
 <p>コメント件数：<%= @post.post_comments.count %></p>
+
 <% @post.post_comments.each do |post_comment| %>
-  
+  <div class="border text-break rounded-top m-1 p-3 bg-light">
   <%= post_comment.user.name %>
-  <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+  <br>
+  <%= post_comment.comment %>
+  <br>
+  <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+  </div>
 <% end %>
 </div>
+
 <div class="new-comment">
 <%= form_with(model:[@post, @post_comment], local: true) do |f| %>
   <%= f.text_field :comment, rows:'5',placeholder: "コメントをここに" %>
@@ -40,4 +49,6 @@
     PostComment.find_by(id: params[:id], post_id: params[:post_id]).destroy
     redirect_to post_path(params[:post_id])
 <% end %>
+</div>
+</div>
 </div>
