@@ -1,16 +1,17 @@
 <h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<p>Find me in app/views/posts/index.html.erb\\未完の為ページ確認の諸々が残っています。</p>
+   <%unless current_user==nil%>
 <div class="container">
   <div class="row">
     <div class="col-sm-2">
-   
+
       <%=link_to "mypage",user_path(current_user.id)%>
         <p>所属グループ</p>
-              
+
         <p>グループ新規作成</p>
-        
-        
-    </div>  
+
+
+    </div>
       <div class="col-sm-7">
           <table class="table table-inverse">
             <div class="border text-break rounded-top m-1 p-3 bg-light">
@@ -31,7 +32,7 @@
                             <%unless post.image_id==nil%>
                                 <%= attachment_image_tag post, :image ,:fill, 300, 300%>
                                 <p class="text-black"><%= post.post_text %></p>
-                            <% end %>     
+                            <% end %>
                             <p>投稿者：<%= post.user.name %></p>
                         </div>
                     <%end%>
@@ -39,8 +40,11 @@
             </table>
         </div>
         <div class="col-sm-3">
-        
-    </div>  
+
+    </div>
 
     </div>
     </div>
+    <%else%>
+    <p>使用には登録が必要です。</p>
+        <%end%>
