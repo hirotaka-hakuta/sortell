@@ -1,50 +1,63 @@
 <h1>Posts#index</h1>
 <p>Find me in app/views/posts/index.html.erb\\未完の為ページ確認の諸々が残っています。</p>
-   <%unless current_user==nil%>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-2">
+<%unless current_user==nil%>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
 
-      <%=link_to "mypage",user_path(current_user.id)%>
-        <p>所属グループ</p>
-
-        <p>グループ新規作成</p>
-
-
-    </div>
-      <div class="col-sm-7">
-          <table class="table table-inverse">
-            <div class="border text-break rounded-top m-1 p-3 bg-light">
-              <%= render 'layouts/error', model: @post %>
-                <%= form_with model: @post, local:true do |f| %>
-                  <h4>画像</h4>
-                  <%= f.attachment_field :image %>
-                  <h4>投稿文</h4>
-                  <div class="input-group mb-3 mt-4">
-                    <%= f.text_area :post_text, class:"form-control" %>
-                    <%= f.submit '投稿' %>
-                  </div>
-                <% end %>
-             </div>
-                <% @posts.each do |post| %>
-                    <%=link_to post_path(post.id) do%>
-                        <div class="border text-break rounded-top m-1 p-3 bg-light">
-                            <%unless post.image_id==nil%>
-                                <%= attachment_image_tag post, :image ,:fill, 300, 300%>
-                                <p class="text-black"><%= post.post_text %></p>
-                            <% end %>
-                            <p>投稿者：<%= post.user.name %></p>
-                        </div>
-                    <%end%>
-                <% end %>
-            </table>
-        </div>
-        <div class="col-sm-3">
-
-    </div>
-
-    </div>
-    </div>
-    <%else%>
-    <p>使用には登録が必要です。</p>
+        <%=link_to "mypage",user_path(current_user.id)%>
+          <p>所属グループ</p>
+          <% @groups.each do |group| %>
+            <p>：<%= group.group_name %></p>
+          <%end%>
+          <p>グループ新規作成</p>
+          <%= form_with model: @group, local:true do |f| %>
+           <%= f.text_field :group_name, class:"form-control" %>
+           <br>
+           <%= f.submit '新規作成' %>
         <%end%>
+      </div>
+      <div class="col-sm-7">
+        <table class="table table-inverse">
+          <div class="border text-break rounded-top m-1 p-3 bg-light">
+            <%= render 'layouts/error', model: @post %>
+            <%= form_with model: @post, local:true do |f| %>
+
+              <h4>画像</h4>
+              <%= f.attachment_field :image %>
+              <h4>投稿文</h4>
+
+              <div class="input-group mb-3 mt-4">
+                <%= f.text_area :post_text, class:"form-control" %>
+              </div>
+              <%=f.fields_for @user_group do |i| %>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">投稿先</label>
+                  <%= i.collection_check_boxes :group_id, Group.where(user_id:current_user), :id, :group_name %>
+                </div>
+              <%end%>
+              <%= f.submit '投稿' %>
+            <% end %>
+          </div>
+          <% @posts.each do |post| %>
+            <%=link_to post_path(post.id) do%>
+              <div class="border text-break rounded-top m-1 p-3 bg-light">
+                <%unless post.image_id==nil%>
+                  <%= attachment_image_tag post, :image ,:fill, 300, 300%>
+                  <p class="text-black"><%= post.post_text %></p>
+                <% end %>
+                <p>投稿者：<%= post.user.name %></p>
+              </div>
+            <%end%>
+          <% end %>
+        </table>
+      </div>
+      <div class="col-sm-3">
+
+      </div>
+
+    </div>
+  </div>
+<%else%>
+  <p>使用には登録が必要です。</p>
+<%end%>
