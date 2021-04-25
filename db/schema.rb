@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2021_04_20_081438) do
 
   create_table "groups", force: :cascade do |t|
     t.integer "user_id"
-    t.string "group"
+    t.string "group_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_04_20_081438) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
-    t.string "image_id"
+    t.string "image_id", default: ""
     t.string "post_text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
