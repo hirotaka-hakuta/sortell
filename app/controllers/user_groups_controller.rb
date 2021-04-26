@@ -3,4 +3,9 @@ class UserGroupsController < ApplicationController
   def show; end
 
   def index; end
+    
+  def add; 
+    
+  end
+
 end

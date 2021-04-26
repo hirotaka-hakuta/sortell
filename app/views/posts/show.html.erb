@@ -6,6 +6,9 @@
   <%= attachment_image_tag @post, :image ,width: '80%', height: '80%' %>
   <p><%= @post.post_text %></p>
   <p>投稿者：<%= @post.user.name %></p>
+  <p>所属グループ：<% @user_groups.each do |group| %>
+           <%= group.group_name %>
+          <%end%></p>
   <p>投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
   
   <% if @post.user == current_user %>
