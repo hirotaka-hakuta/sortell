@@ -1,33 +1,44 @@
 <div class="container">
-</br>
-
-  <div class="row">
+	<div class="row">
 	<h2 class="mypage"><i class="fas fa-user"></i>マイページ</h2>
-  </div>
-  </br>
-  <p><strong>会員情報</strong>
+		<div class="col-sm-2">
+			<p>グループに誘う</p>
+			<%= form_with model: @user_group ,url: {controller: 'user_groups', action: 'add' }, local:true do |f| %>
 
-	  <%= link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>
-	  <%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-primary" %></p>
-   </br>
+			<%= f.collection_select :user_group_id, @current_user_groups, :id, :name %>
+			<%=f.submit '勧誘', class:"btn btn-lg btn-block btn-info mt-4" %>
+			<%end%>
+		</div>
+		<div class="col-sm-8">
+		<p><strong>会員情報</strong>
+			<%= link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>
+			<%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-primary" %></p>
 		<div class="row">
 			<div class="col-xs-8">
 				<table class="table">
 					<tr>
 						<td>名前</td>
-						<td><%= current_user.name %></td>
+						<td><%= @user.name %></td>
 					</tr>
-					<tr>
-						<td>メールアドレス</td>
-						<td><%= current_user.email %></td>
-					</tr>
+					<%if @user.id==current_user.id%>
+						<tr>
+							<td>メールアドレス</td>
+							<td><%= @user.email %></td>
+						</tr>
+					<%end%>
 					<tr>
 						<td>所属グループ</td>
-						<td><%= current_user.email %></td>
-					</tr>					
+						<% @user_groups.each do |group| %>
+							<td>
+								：<%= group.group_name %>
+							</td>
+						<%end%>
+					</tr>
 				</table>
-			</div><br><br>
+			</div>
 		</div>
-
+	</div>
+	<div class="col-sm-2">
 
 	</div>
+</div>

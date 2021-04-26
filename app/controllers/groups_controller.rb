@@ -1,15 +1,18 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
   def create
+    # グループ名登録
     @group = Group.new(group_params)
+    @user_group=UserGroup.new
     @group.user_id = current_user.id
-    @user_group=@group
+    @user_group.user_id=@group.user_id
     @group.save
-    # binding.pry
+    @user_group.group_id=@group.id.to_i
+    @user_group.save
+    binding.pry
     redirect_to posts_path
   end
 
-  def add; end
 
   def show; end
 

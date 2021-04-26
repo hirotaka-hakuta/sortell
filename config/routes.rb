@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   # ActiveAdmin.routes(self)
 
   devise_for :users
+  post 'user_groups' => 'user_groups#add'
   resources :groups
   resources :users
   resources :posts, only: [:new, :create, :index, :show, :destroy] do
