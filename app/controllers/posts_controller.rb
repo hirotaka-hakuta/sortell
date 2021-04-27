@@ -13,11 +13,12 @@ class PostsController < ApplicationController
 
   def index
     @post = Post.new
-    @posts = Post.all
+    @posts = Post.all.order(id: "DESC")
     @user_group=UserGroup.new
+    @user_groups=UserGroup.all
     @group = Group.new
     @groups = Group.all
-
+    @post_groups=PostGroup.all
   end
 
   def create
@@ -27,11 +28,11 @@ class PostsController < ApplicationController
     @post.save
     @user_groups=UserGroup.where(user_id: current_user.id)
     @post_group=PostGroup.new
-    binding.pry
+    # binding.pry
 
 # 投稿時に選択したグループを配列から取り出してそれぞれ保存する
       e=0
-    unless params[:post][:user_group][:group_id]==[]
+    unless params[:post][:user_group][:group_id]==[""]
 
       for e in params[:post][:user_group][:group_id] do
         @post_group.group_id=params[:post][:user_group][:group_id][e.to_i-1]
@@ -40,14 +41,18 @@ class PostsController < ApplicationController
       end
     else
 # 投稿時にグループを選択していない場合、全てのグループに属する
-      for e in @user_groups do
-        @post_group.group_id=@user_groups[e.to_i-1]
+
+      @user_groups.where(user_id: @post.user_id).each do |user_group|
+        
+        @post_group=PostGroup.new
+        @post_group.group_id=user_group.group_id
         @post_group.post_id=@post.id
         @post_group.save
+
       end
     end
 
-    # binding.pry
+
     redirect_to posts_path
   end
 

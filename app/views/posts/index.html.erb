@@ -7,8 +7,12 @@
 
         <%=link_to "mypage",user_path(current_user.id)%>
           <p>所属グループ</p>
-          <% @groups.each do |group| %>
-            <p>：<%= group.group_name %></p>
+          <% @user_groups.each do |user_group| %>
+
+            <%if user_group.user_id==current_user.id%>
+              <p>：<%= Group.find(user_group.group_id).group_name %></p>
+
+            <%end%>
           <%end%>
           <p>グループ新規作成</p>
           <%= form_with model: @group, local:true do |f| %>
@@ -39,18 +43,42 @@
               <%= f.submit '投稿' %>
             <% end %>
           </div>
+
           <% @posts.each do |post| %>
-            <%=link_to post_path(post.id) do%>
-              <div class="border text-break rounded-top m-1 p-3 bg-light">
-                <%unless post.image_id==nil%>
-                  <%= attachment_image_tag post, :image ,:fill, 300, 300%>
-                  <p class="text-black"><%= post.post_text %></p>
-                <% end %>
-                <p>投稿者：<%= post.user.name %></p>
-                
-              </div>
+            <%p = 0%>
+            <%@post_groups.each do |post_group| %>
+
+            <!--重複する投稿は表示させない-->
+              <%if post.id== post_group.post_id && p == 0 %>
+                <%@user_groups.each do |user_group|%>
+
+                <!--グループに所属していない人には表示しない-->
+                  <%if user_group.group_id==post_group.group_id && user_group.user_id==current_user.id%>
+                    <%=link_to post_path(post.id) do%>
+                      <div class="border text-break rounded-top m-1 p-3 bg-light">
+                        <%unless post.image_id==nil%>
+                          <%= attachment_image_tag post, :image ,:fill, 300, 300%>
+                          <p class="text-black"><%= post.post_text %></p>
+                        <% end %>
+                        <p>投稿者：<%= post.user.name %></p>
+                        <% @post_groups.where(post_id: post.id).each do |post_group| %>
+
+                						<p>
+                							：<%= Group.find(post_group.group_id).group_name %>
+                						</p>
+
+              					<%end%>
+                      </div>
+                      <%p+=1%>
+                    <%end%>
+                  <%end%>
+                <%end%>
+              <%end%>
             <%end%>
           <% end %>
+          <p>投稿グループ</p>
+
+
         </table>
       </div>
       <div class="col-sm-3">

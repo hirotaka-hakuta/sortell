@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
     @group.save
     @user_group.group_id=@group.id.to_i
     @user_group.save
-    binding.pry
+    # binding.pry
     redirect_to posts_path
   end
 

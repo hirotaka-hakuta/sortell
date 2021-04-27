@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   @user_groups=UserGroup.where(user_id: @user.id)
   @current_user_groups=UserGroup.where(user_id: current_user.id)
   @user_group=UserGroup.new
-  binding.pry
+  # binding.pry
   end
 
   def index;

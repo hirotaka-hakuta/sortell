@@ -1,18 +1,25 @@
 <div class="container">
 	<div class="row">
 	<h2 class="mypage"><i class="fas fa-user"></i>マイページ</h2>
-		<div class="col-sm-2">
-			<p>グループに誘う</p>
-			<%= form_with model: @user_group ,url: {controller: 'user_groups', action: 'add' }, local:true do |f| %>
 
-			<%= f.collection_select :user_group_id, @current_user_groups, :id, :name %>
-			<%=f.submit '勧誘', class:"btn btn-lg btn-block btn-info mt-4" %>
+		<div class="col-sm-2">
+			<%unless @current_user_groups==[]%>
+				<p>グループに誘う</p>
+				<%= form_with model: @user_group ,url: {controller: 'user_groups', action: 'add' }, local:true do |f| %>
+				<!--グループのリーダーだけが勧誘できる。今後のアプデでリーダーの譲渡、サブリーダー作成の機能実装をする。-->
+					<%= f.collection_select :group_id, Group.where(user_id: current_user.id), :id, :group_name %>
+					<%=f.hidden_field :user_id,:value => @user.id%>
+					<%=f.submit '勧誘', class:"btn btn-lg btn-block btn-info mt-4" %>
+				<%end%>
 			<%end%>
 		</div>
+
 		<div class="col-sm-8">
 		<p><strong>会員情報</strong>
-			<%= link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>
-			<%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-primary" %></p>
+			<%if @user.id==current_user.id%>
+				<%= link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>
+				<%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-primary" %></p>
+			<%end%>
 		<div class="row">
 			<div class="col-xs-8">
 				<table class="table">
@@ -28,9 +35,11 @@
 					<%end%>
 					<tr>
 						<td>所属グループ</td>
-						<% @user_groups.each do |group| %>
+						<!--グループID順にソートして表示する-->
+						<% @user_groups.where(user_id: @user.id).sort_by(&:group_id).each do |user_group| %>
+
 							<td>
-								：<%= group.group_name %>
+								：<%= Group.find(user_group.group_id).group_name %>
 							</td>
 						<%end%>
 					</tr>
