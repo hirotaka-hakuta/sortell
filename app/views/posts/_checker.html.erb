@@ -1,0 +1,14 @@
+      <% if @post.checkerd_by?(current_user) %>
+        <p>
+          <%= link_to post_checkers_path(@post), method: :delete,class:"text-decoration-none btn btn-primary text-light",remote: true do %>
+            〇 確認済み: <%= @post.checkers.count %>人確認済み
+          <% end %>
+        </p>
+      <% else %>
+        <p>
+        <%= link_to post_checkers_path(@post), method: :post,class:"text-decoration-none btn btn-primary text-light",remote: true do %>
+          ― 現在未確認 : <%= @post.checkers.count %>人確認済み
+        <% end %>
+        </p>
+      <% end %>
+

@@ -1,0 +1,26 @@
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+
+        </div>
+
+      <div class="col-sm-7">
+        <table class="table table-inverse table-info">
+          <%@posts.each do |post|%>
+
+            <%@user_groups.each do |user_group| %>
+              <%if user_group.group_id== PostGroup.find_by(post_id: post.id).group_id && user_group.user_id==current_user.id%>
+                <div class="bg-light p-1 m-1 rounded ">
+                  <%=link_to post.post_text,post_path(post.id),class:"text-decoration-none text-break"%>
+                </div>
+              <%end%>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+      <div class="col-sm-2">
+
+      </div>
+
+    </div>
+  </div>

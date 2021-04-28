@@ -1,53 +1,63 @@
+<h2 class="mypage"><i class="fas fa-user"></i>ユーザーページ</h2>
 <div class="container">
 	<div class="row">
-	<h2 class="mypage"><i class="fas fa-user"></i>マイページ</h2>
 
-		<div class="col-sm-2">
-			<%unless @current_user_groups==[]%>
-				<p>グループに誘う</p>
-				<%= form_with model: @user_group ,url: {controller: 'user_groups', action: 'add' }, local:true do |f| %>
-				<!--グループのリーダーだけが勧誘できる。今後のアプデでリーダーの譲渡、サブリーダー作成の機能実装をする。-->
-					<%= f.collection_select :group_id, Group.where(user_id: current_user.id), :id, :group_name %>
-					<%=f.hidden_field :user_id,:value => @user.id%>
-					<%=f.submit '勧誘', class:"btn btn-lg btn-block btn-info mt-4" %>
-				<%end%>
+
+		<div class="col-sm-3">
+
+			<%if @user.id==current_user.id%>
+				<!--<% link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>-->
+				<%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-light text-decoration-none m-2 p-2" %></p>
+			<%end%>
+
+			<%unless @current_user_groups==nil || @user.id==current_user.id%>
+
+				<div class="bg-light rounded mt-4 p-3">
+					<p>グループに招待する</p>
+					<%= form_with model: @user_group ,url: {controller: 'user_groups', action: 'add' }, local:true do |f| %>
+					<!--グループのリーダーだけが勧誘できる。今後のアプデでリーダーの譲渡、サブリーダー作成の機能実装をする。-->
+						<%= f.collection_select :group_id, Group.where(user_id: current_user.id), :id, :group_name %>
+						<%=f.hidden_field :user_id,:value => @user.id%>
+						<%=f.submit '招待', class:"btn btn-lg btn-block btn-info mt-4" %>
+					<%end%>
+				</div>
 			<%end%>
 		</div>
 
-		<div class="col-sm-8">
-		<p><strong>会員情報</strong>
-			<%if @user.id==current_user.id%>
-				<%= link_to "編集する", edit_user_path, class:"btn btn-primary mypage_edit" %>
-				<%= link_to "パスワードを変更する", edit_user_registration_path, class:"btn btn-primary" %></p>
-			<%end%>
-		<div class="row">
-			<div class="col-xs-8">
-				<table class="table">
-					<tr>
-						<td>名前</td>
-						<td><%= @user.name %></td>
-					</tr>
-					<%if @user.id==current_user.id%>
-						<tr>
-							<td>メールアドレス</td>
-							<td><%= @user.email %></td>
-						</tr>
-					<%end%>
-					<tr>
-						<td>所属グループ</td>
-						<!--グループID順にソートして表示する-->
-						<% @user_groups.where(user_id: @user.id).sort_by(&:group_id).each do |user_group| %>
+		<div class="col-sm-7">
 
-							<td>
-								：<%= Group.find(user_group.group_id).group_name %>
-							</td>
+
+			<p><strong>会員情報</strong></p>
+			<div class="row">
+				<div class="col-xs-8">
+					<table class="table">
+						<tr>
+							<td>名前</td>
+							<td><%= @user.name %></td>
+						</tr>
+						<%if @user.id==current_user.id%>
+							<tr>
+								<td>メールアドレス</td>
+								<td><%= @user.email %></td>
+							</tr>
 						<%end%>
-					</tr>
-				</table>
+						<tr>
+							<td>所属グループ</td>
+							<!--グループID順にソートして表示する-->
+							<% @user_groups.where(user_id: @user.id).sort_by(&:group_id).each do |user_group| %>
+
+								<td>
+									<%= Group.find(user_group.group_id).group_name %>
+								</td>
+								</tr><tr><td></td>
+							<%end%>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-2">
+		<div class="col-sm-2">
 
+		</div>
 	</div>
 </div>
