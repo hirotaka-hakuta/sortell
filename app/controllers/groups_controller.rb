@@ -3,11 +3,11 @@ class GroupsController < ApplicationController
   def create
     # グループ名登録
     @group = Group.new(group_params)
-    @user_group=UserGroup.new
+    @user_group = UserGroup.new
     @group.user_id = current_user.id
-    @user_group.user_id=@group.user_id
+    @user_group.user_id = @group.user_id
     if @group.save
-      @user_group.group_id=@group.id.to_i
+      @user_group.group_id = @group.id.to_i
       @user_group.save
     else
       flash[:notice] = 'グループ名を入力してください'
@@ -15,7 +15,6 @@ class GroupsController < ApplicationController
     # binding.pry
     redirect_to posts_path
   end
-
 
   def show; end
 
