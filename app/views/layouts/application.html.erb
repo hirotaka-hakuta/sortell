@@ -15,8 +15,8 @@
 
   <body class=" table-info">
     <div class="container">
-      <div class="bg-warning p-1">
-        <%= flash[:notice] %>
+      <div class="bg-warning">
+        <h2><%= flash[:notice]%></h2>
       </div>
       <div class="float-right p-2 m-2 bg-light rounded">
         <% if user_signed_in? %>
