@@ -42,12 +42,14 @@
         <div class="mx-auto">
           <div class="p-2 m-1">
           <h5>投稿文検索</h5>
-          <%= search_form_for @search, url: search_posts_path do |f| %>
-            <%= f.label :post_text_cont,"投稿文"%>
-            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
-            <br>
-            <%= f.submit '検索',class:"m-2" %>
-          <% end %>
+          <%if user_signed_in?%>
+            <%= search_form_for @search, url: search_posts_path do |f| %>
+              <%= f.label :post_text_cont,"投稿文"%>
+              <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
+              <br>
+              <%= f.submit '検索',class:"m-2" %>
+            <% end %>
+          <%end>
           </div>
         </div>
       </div>
