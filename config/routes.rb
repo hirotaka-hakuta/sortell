@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     resources :post_comments, only: [:create, :destroy, :edit, :show]
   end
   root to: 'posts#index'
-  match '*unmatched_route', to: 'application#raise_not_found!', via: :all
-  get '*path', controller: 'application', action: 'render_404'
+  # match '*unmatched_route', to: 'application#raise_not_found!', via: :all
+  # get '*path', controller: 'application', action: 'render_404'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
