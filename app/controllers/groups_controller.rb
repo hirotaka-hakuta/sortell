@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
       @user_group.group_id = @group.id.to_i
       @user_group.save
       
-    elses
+    else
       flash[:notice] = 'グループ名を入力してください'
       
     end
