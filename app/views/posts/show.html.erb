@@ -1,57 +1,46 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+
 <div class="container">
   <div class="row">
-<div class="post-body clo-sm-8">
-  <%= attachment_image_tag @post, :image ,width: '80%', height: '80%' %>
-  <p><%= @post.post_text %></p>
-  <p>投稿者：<%= @post.user.name %></p>
-  <p>所属グループ：<% @user_groups.each do |group| %>
-           <%= group.group_name %>
-          <%end%></p>
-  <p>投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
-  
-  <% if @post.user == current_user %>
-    <%= link_to "削除", post_path(@post), method: :delete %>
-  <% end %>
-    <% if @post.checkerd_by?(current_user) %>
-    <p>
-      <%= link_to post_checkers_path(@post), method: :delete do %>
-        〇:<%= @post.checkers.count %>人確認済み
+    <div class="post-body col-sm-8 bg-light p-2 rounded h-100">
+      <%= attachment_image_tag @post, :image ,width: '80%', height: '80%' %>
+      <p><%= @post.post_text %></p>
+      <p>投稿者：<%= @post.user.name %></p>
+      <p>所属グループ：<% @post_groups.sort_by(&:group_id).each do |post_group| %>
+				：<%= Group.find(post_group.group_id).group_name %>
+      <%end%></p>
+      <p>投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+
+      <% if @post.user == current_user %>
+        <%= link_to "削除", post_path(@post), method: :delete %>
       <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to post_checkers_path(@post), method: :post do %>
-        ― 未確認:<%= @post.checkers.count %>人確認済み
-      <% end %>
-    </p>
-  <% end %>
-</div>
+      
+      <%= render partial: "checker" %>
+    </div>
+    <div class="col-sm-4">
+      <div class="new-comment sticky-top table-info p-2 rounded">
+        <%= form_with(model:[@post, @post_comment], local: true) do |f| %>
+          <%= f.text_field :comment, rows:'5',placeholder: "コメント欄" ,class:"m-1" %>
+          <%= f.submit "送信する",class:"m-1" %>
+        <% end %>
+      </div>
 
-<div class="comments">
+      <div class="comments">
 
-  <!--コメントに対するコメントも出来るようにする-->
-<p>コメント件数：<%= @post.post_comments.count %></p>
+        <!--将来的に  コメントに対するコメントも出来るようにする-->
+        <p>コメント件数：<%= @post.post_comments.count %></p>
 
-<% @post.post_comments.each do |post_comment| %>
-  <div class="border text-break rounded-top m-1 p-3 bg-light">
-  <%= post_comment.user.name %>
-  <br>
-  <%= post_comment.comment %>
-  <br>
-  <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+        <% @post.post_comments.each do |post_comment| %>
+          <div class="border text-break rounded-top m-1 p-3 bg-light">
+          <%= post_comment.user.name %>
+          <br>
+          <%= post_comment.comment %>
+          <br>
+          <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+          </div>
+        <% end %>
+      </div>
+
+
+    </div>
   </div>
-<% end %>
-</div>
-
-<div class="new-comment">
-<%= form_with(model:[@post, @post_comment], local: true) do |f| %>
-  <%= f.text_field :comment, rows:'5',placeholder: "コメントをここに" %>
-  <%= f.submit "送信する" %>
-    PostComment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    redirect_to post_path(params[:post_id])
-<% end %>
-</div>
-</div>
 </div>

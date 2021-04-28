@@ -6,10 +6,13 @@ class GroupsController < ApplicationController
     @user_group=UserGroup.new
     @group.user_id = current_user.id
     @user_group.user_id=@group.user_id
-    @group.save
-    @user_group.group_id=@group.id.to_i
-    @user_group.save
-    binding.pry
+    if @group.save
+      @user_group.group_id=@group.id.to_i
+      @user_group.save
+    else
+      flash[:notice] = 'グループ名を入力してください'
+    end
+    # binding.pry
     redirect_to posts_path
   end
 

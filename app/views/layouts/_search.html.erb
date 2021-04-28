@@ -1,0 +1,20 @@
+      <div class="p-2 m-4">
+
+          <%= select_tag 'range' ,options_for_select([['ユーザー検索', '1'], ['投稿文検索', '2']]) %>
+
+        <h5>ユーザー検索</h5>
+        <%= search_form_for @search2, url: search_users_path do |f| %>
+
+          <%= f.search_field :name_cont ,placeholder: "ユーザー名" %>
+          <br>
+          <%= f.submit '検索' %>
+        <% end %>
+        </div>
+        <div class="p-2 m-4">
+        <h5>投稿文検索</h5>
+        <%= search_form_for @search, url: search_posts_path do |f| %>
+
+          <%= f.search_field :post_text_cont ,placeholder: "投稿文" %>
+          <br>
+          <%= f.submit '検索' %>
+        <% end %>

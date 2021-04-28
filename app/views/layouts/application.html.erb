@@ -7,30 +7,51 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= link_to 'home', "/" %>
-    <%= link_to 'ユーザー一覧', users_path%>
+
+
+
+
   </head>
 
-  <body>
-    <div class="container table-info">
+  <body class=" table-info">
+    <div class="container">
+      <div class="bg-warning">
+        <%= flash[:notice] %>
+      </div>
+      <div class="float-right p-2 m-2 bg-light rounded">
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to 'ユーザー一覧', users_path%>
+          </li>
+          <li>
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+          </li>
 
-    <% if user_signed_in? %>
-      <li>
-        <%= link_to '投稿フォーム', new_post_path %>
-      </li>
-      <li>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_user_session_path %>
-      </li>
-    <% end %>
-
-    <%= yield %>
+        <% else %>
+          <li>
+            <%= link_to "新規登録", new_user_registration_path %>
+          </li>
+          <li>
+            <%= link_to "ログイン", new_user_session_path %>
+          </li>
+        <% end %>
+      </div>
+    <div class="container">
+      <div class="row">
+        <h1 class="p-2"><strong><%= link_to 'Sortell', posts_path ,class:"text-decoration-none"%></strong></h1>
+        <div class="mx-auto">
+          <div class="p-2 m-1">
+          <h5>投稿文検索</h5>
+          <%= search_form_for @search, url: search_posts_path do |f| %>
+            <%= f.label :post_text_cont,"投稿文"%>
+            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
+            <br>
+            <%= f.submit '検索',class:"m-2" %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+      <%= yield %>
     </div>
   </body>
 </html>
