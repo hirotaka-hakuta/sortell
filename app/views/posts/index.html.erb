@@ -65,7 +65,7 @@
 
                 <!--グループに所属していない人には表示しない-->
                   <%if user_group.group_id==post_group.group_id && user_group.user_id==current_user.id%>
-                    <%=link_to post_path(post.id) do%>
+                    <%=link_to post_path(post.id),class:"text-decoration-none text-black" do%>
                       <div class="border text-break rounded-top m-1 p-3 bg-light">
                         <%unless post.image_id==nil%>
                           <%= attachment_image_tag post, :image ,:fill, 300, 300%>
