@@ -18,9 +18,9 @@
           </div>
           <p class="bg-warning rounded p-1 text-center">グループ新規作成</p>
           <%= form_with model: @group, local:true do |f| %>
-            <%= f.text_field :group_name, class:"form-control" %>
-            <br>
-            <%= f.submit '新規作成' %>
+            <%= f.text_field :group_name, class:"form-control mt-2" %>
+
+            <%= f.submit '新規作成' ,class:"mt-1" %>
           <%end%>
         </div>
       </div>
@@ -40,9 +40,9 @@
                 </div>
                 <%=f.fields_for @user_group do |i| %>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">投稿先</label>
+                    <label class="control-label">投稿先</label><br>
                     <!--グループID順にソート、グループ名をGroupモデルから取得-->
-                    <%= i.collection_check_boxes :group_id, UserGroup.where(user_id:current_user).sort_by(&:group_id), :group_id, :group_id do |b| %>
+                    <%= i.collection_check_boxes :group_id, UserGroup.where(user_id:current_user).sort_by(&:group_id), :group_id, :group_id,class:"m-1 p-1" do |b| %>
 
                       <%= b.label { b.check_box + Group.find(b.text).group_name } %>
                     <% end %>
@@ -65,23 +65,25 @@
 
                 <!--グループに所属していない人には表示しない-->
                   <%if user_group.group_id==post_group.group_id && user_group.user_id==current_user.id%>
-                    <%=link_to post_path(post.id),class:"text-decoration-none text-black" do%>
-                      <div class="border text-break rounded-top m-1 p-3 bg-light">
+                    <div class="border text-break rounded-top m-1 p-3 bg-light">
+                      <%=link_to post_path(post.id),class:"text-decoration-none text-black" do%>
                         <%unless post.image_id==nil%>
                           <%= attachment_image_tag post, :image ,:fill, 300, 300%>
                           <p class="text-black"><%= post.post_text %></p>
                         <% end %>
-                        <p>投稿者：<%= post.user.name %></p>
-                        <% @post_groups.where(post_id: post.id).sort_by(&:group_id).each do |post_group| %>
-
-                						<span class="mg-1">
-                							・<%= Group.find(post_group.group_id).group_name %>
-                						</span>
-
+                      <%end%>
+                      <%=link_to user_path(post.user.id),class:"text-decoration-none text-black" do%>
+                        <p class="mt-0 p-0">投稿者：<%= post.user.name %></p>
+                      <%end%>
+                      <% @post_groups.where(post_id: post.id).sort_by(&:group_id).each do |post_group| %>
+                      <!--!!!!!!!-->
+                        <%=link_to user_path(post.user.id),class:"text-decoration-none text-black" do%>
+                          <span class="mt-0 p-0">
+              					  	・<%= Group.find(post_group.group_id).group_name%>
+              					  </span>
               					<%end%>
-                      </div>
-                      <%p+=1%>
-                    <%end%>
+            					<%end%>
+                    </div>
                   <%end%>
                 <%end%>
               <%end%>

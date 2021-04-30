@@ -1,3 +1,4 @@
+
       <% if @post.checkerd_by?(current_user) %>
         <p>
           <%= link_to post_checkers_path(@post), method: :delete,class:"text-decoration-none btn btn-primary text-light",remote: true do %>

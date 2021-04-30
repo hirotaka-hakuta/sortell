@@ -1,4 +1,5 @@
 class CheckersController < ApplicationController
+
   def create
     post = Post.find(params[:post_id])
     checker = current_user.checkers.new(post_id: post.id)
@@ -12,4 +13,6 @@ class CheckersController < ApplicationController
     checker.destroy
     redirect_to post_path(post)
   end
+
+
 end
