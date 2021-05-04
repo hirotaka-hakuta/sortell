@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 
   def index
     @post = Post.new
-    @posts = Post.all.order(id: 'DESC')
+    @posts = Post.all.order(id: 'DESC').page(params[:page]).per(15)
     @user_group = UserGroup.new
     @user_groups = UserGroup.all
     @group = Group.new
