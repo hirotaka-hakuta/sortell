@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resource :checkers, only: [:create, :destroy]
     resources :post_comments, only: [:create, :destroy, :edit, :show]
   end
-  root to: 'posts#index'
+  root to: 'homes#about'
   # match '*unmatched_route', to: 'application#raise_not_found!', via: :all
   # get '*path', controller: 'application', action: 'render_404'
 
