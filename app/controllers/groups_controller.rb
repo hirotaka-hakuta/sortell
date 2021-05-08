@@ -18,7 +18,9 @@ class GroupsController < ApplicationController
     redirect_to posts_path
   end
 
-  def show; end
+  def show;
+    @groups=Group.all  
+  end
 
   def index; end
 
