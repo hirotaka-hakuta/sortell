@@ -12,7 +12,10 @@
             <% @user_groups.each do |user_group| %>
 
               <%if user_group.user_id==current_user.id%>
-                <p class="m-1 text-break">：<%= Group.find(user_group.group_id).group_name %></p>
+
+                <%=link_to group_path(user_group.group_id) do%>
+                  <p class="m-1 text-break">：<%= Group.find(user_group.group_id).group_name %></p>
+                <%end%>
               <%end%>
             <%end%>
           </div>
