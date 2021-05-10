@@ -1,2 +1,17 @@
-<h1>Groups#show</h1>
-<p>Find me in app/views/groups/show.html.erb</p>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-7 bg-light rounded p-2">
+
+
+        <h2 class="m-1 p-1">グループユーザー一覧</h2>
+        <% @user_groups.each do |usergroup| %>
+          <%=link_to user_path(usergroup.user_id),class:"m-2 p-3" do%>
+            <%=@users.find(usergroup.user_id).name%><br>
+          <%end%>
+        <%end%>
+      </div>
+      <div class="col-sm-2">
+      </div>

@@ -47,7 +47,9 @@
 							<% @user_groups.where(user_id: @user.id).sort_by(&:group_id).each do |user_group| %>
 
 								<td>
-									<%= Group.find(user_group.group_id).group_name %>
+									<%=link_to group_path(user_group.group_id) do%>
+										<%= Group.find(user_group.group_id).group_name %>
+									<%end%>
 								</td>
 								</tr><tr><td></td>
 							<%end%>
