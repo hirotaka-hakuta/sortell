@@ -75,10 +75,16 @@ class PostsController < ApplicationController
   def search
     @user_groups = UserGroup.all
     @q = Post.ransack(params[:q])
-    @posts = @q.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
-    if @q_header
-      @posts = @q_header.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
+    unless params[:post_text_cont]==nil
+
+
+      @posts = @q.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
+
+      if @q_header
+        @posts = @q_header.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
+      end
     end
+    @posts=nil
   end
 
   private

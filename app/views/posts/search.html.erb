@@ -6,6 +6,7 @@
 
       <div class="col-sm-7">
         <table class="table table-inverse table-info">
+          <%unless @posts==nil%>
           <%@posts.each do |post|%>
 
             <%@user_groups.each do |user_group| %>
@@ -16,8 +17,13 @@
               <%end%>
             <%end%>
           <%end%>
+          <%else%>
+          <p>検索には文字を入力してください</p>
+          <%end%>
           <div class="mx-auto" style="width: 200px;">
-            <%= paginate @posts %>
+            <%unless @posts==nil%>
+              <%= paginate @posts %>
+            <%end%>
           </div>
         </table>
       </div>
