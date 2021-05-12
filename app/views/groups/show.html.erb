@@ -7,11 +7,13 @@
 
 
         <h2 class="m-1 p-1">グループユーザー一覧</h2>
+        <h4 class="m-3">グループ名:<%=@group.group_name%></h4>
         <% @user_groups.each do |usergroup| %>
           <%=link_to user_path(usergroup.user_id),class:"m-2 p-3" do%>
             <%=@users.find(usergroup.user_id).name%><br>
           <%end%>
         <%end%>
+        <%= paginate @user_groups %>
       </div>
       <div class="col-sm-2">
       </div>

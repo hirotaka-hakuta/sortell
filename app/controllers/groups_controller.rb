@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
 
   def show;
     @group=Group.find(params[:id])
-    @user_groups=UserGroup.where(group_id: params[:id])
+    @user_groups=UserGroup.where(group_id: params[:id]).page(params[:page])
     @users=User.all
   end
 
