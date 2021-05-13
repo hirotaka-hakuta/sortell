@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :users do
   end
 
-  resources :posts, only: [:new, :create, :index, :show, :destroy] do
+  resources :posts do
     collection do
       get 'search'
     end
