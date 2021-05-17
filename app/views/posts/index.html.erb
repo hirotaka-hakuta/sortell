@@ -59,15 +59,16 @@
           </div>
 
           <% @posts.each do |post| %>
-            <%p = 0%>
+            <%count = 0%>
             <%@post_groups.each do |post_group| %>
 
             <!--重複する投稿は表示させない-->
-              <%if post.id== post_group.post_id && p == 0 %>
+              <%if post.id== post_group.post_id && count == 0 %>
                 <%@user_groups.each do |user_group|%>
 
                 <!--グループに所属していない人には表示しない-->
                   <%if user_group.group_id==post_group.group_id && user_group.user_id==current_user.id%>
+                    <%count=1%>
                     <div class="border text-break rounded-top m-1 p-3 bg-light">
                       <%=link_to post_path(post.id),class:"text-decoration-none text-black" do%>
                         <%unless post.image_id==nil%>
@@ -98,6 +99,14 @@
         </table>
       </div>
       <div class="col-sm-2">
+         <h5>投稿文検索</h5>
+
+          <%= search_form_for @search, url: search_posts_path do |f| %>
+            <%= f.label :post_text_cont,"投稿文"%>
+            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
+            <br>
+            <%= f.submit '検索',class:"m-2" %>
+          <% end %>
 
       </div>
 

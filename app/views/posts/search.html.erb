@@ -6,7 +6,7 @@
 
       <div class="col-sm-7">
         <table class="table table-inverse table-info">
-          <%unless @posts==nil%>
+
           <%@posts.each do |post|%>
 
             <%@user_groups.each do |user_group| %>
@@ -14,14 +14,15 @@
                 <div class="bg-light p-1 m-1 rounded ">
                   <%=link_to post.post_text,post_path(post.id),class:"text-decoration-none text-break"%>
                 </div>
+
               <%end%>
             <%end%>
           <%end%>
-          <%else%>
-          <p>検索には文字を入力してください</p>
+          <%if @posts=[]%>
+          <p>検索結果は0件でした。</p>
           <%end%>
           <div class="mx-auto" style="width: 200px;">
-            <%unless @posts==nil%>
+            <%unless @posts==[]%>
               <%= paginate @posts %>
             <%end%>
           </div>

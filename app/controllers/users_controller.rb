@@ -15,6 +15,10 @@ class UsersController < ApplicationController
   def edit; end
 
   def update; end
+  
+  def search 
+    @users=User.all
+  end
 
   private
 

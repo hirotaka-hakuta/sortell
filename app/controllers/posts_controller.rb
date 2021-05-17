@@ -62,7 +62,7 @@ class PostsController < ApplicationController
   def edit;
     @post=Post.find(params[:id])
   end
-  
+
   def update
     @post = Post.find(params[:id])
     @post.update(post_params)
@@ -83,16 +83,13 @@ class PostsController < ApplicationController
   def search
     @user_groups = UserGroup.all
     @q = Post.ransack(params[:q])
-    unless params[:post_text_cont]==nil
 
+    @posts = @q.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
 
-      @posts = @q.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
-
-      if @q_header
-        @posts = @q_header.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
-      end
+    if @q_header
+      @posts = @q_header.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
     end
-    @posts=nil
+
   end
 
   private

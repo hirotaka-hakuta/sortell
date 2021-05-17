@@ -51,7 +51,7 @@
 
           <%= search_form_for @search, url: search_posts_path do |f| %>
             <%= f.label :post_text_cont,"投稿文"%>
-            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
+            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索", required: true%>
             <br>
             <%= f.submit '検索',class:"m-2" %>
           <% end %>
@@ -60,6 +60,7 @@
         </div>
       </div>
       <%= yield %>
+
     </div>
   </body>
 </html>
