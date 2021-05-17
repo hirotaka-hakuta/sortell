@@ -1,0 +1,41 @@
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3">
+
+      </div>
+
+      <div class="col-sm-7">
+        <table class="table table-inverse table-info">
+
+          <%@users.each do |user|%>
+            <div class="bg-light p-2 rounded">
+              <%=link_to user.name,user_path(user.id)%>
+            </div>
+          <%end%>
+          <%if @users==[]%>
+
+          <p>検索結果は0件でした。</p>
+          <%end%>
+          <div class="mx-auto" style="width: 200px;">
+            <%unless @users==[]%>
+              <%= paginate @users %>
+            <%end%>
+          </div>
+        </table>
+      </div>
+      <div class="col-sm-2">
+        <div class="bg-light p-2 rounded" style="width: 200px;">
+         <h5>ユーザー検索</h5>
+
+          <%= search_form_for @search2, url: search_users_path do |f| %>
+            <%= f.label :name_cont,"ユーザー名"%>
+            <%= f.search_field :name_cont,class:'search2',placeholder: "ユーザー名", required: true %>
+            <br>
+            <%= f.submit '検索',class:"m-2" %>
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+  </div>

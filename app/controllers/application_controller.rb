@@ -17,6 +17,13 @@ class ApplicationController < ActionController::Base
     @items = @search.result
   end
 
+  def set_search2
+    @search2 = User.ransack(params[:q])
+
+    @items2 = @search.result
+  end
+
+
   def raise_not_found!
     raise ActionController::RoutingError, "No route matches #{params[:unmatched_route]}"
   end

@@ -99,15 +99,16 @@
         </table>
       </div>
       <div class="col-sm-2">
-         <h5>投稿文検索</h5>
+        <div class="bg-light p-2 rounded" style="width: 200px;">
+         <h5>ユーザー検索</h5>
 
-          <%= search_form_for @search, url: search_posts_path do |f| %>
-            <%= f.label :post_text_cont,"投稿文"%>
-            <%= f.search_field :post_text_cont,class:'search',placeholder: "検索" %>
+          <%= search_form_for @search2, url: search_users_path do |f| %>
+            <%= f.label :name_cont,"ユーザー名"%>
+            <%= f.search_field :name_cont,class:'search2',placeholder: "ユーザー名", required: true %>
             <br>
             <%= f.submit '検索',class:"m-2" %>
           <% end %>
-
+        </div>
       </div>
 
     </div>

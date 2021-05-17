@@ -12,6 +12,7 @@ class PostsController < ApplicationController
   end
 
   def index
+    @search2 = User.ransack(params[:q])
     @post = Post.new
     # ここでページネーションを設定すると見えない投稿の分までページを作るので設定しない
     @posts = Post.all.order(id: 'DESC').page(params[:page])

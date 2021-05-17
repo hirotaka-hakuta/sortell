@@ -15,9 +15,11 @@ class UsersController < ApplicationController
   def edit; end
 
   def update; end
-  
-  def search 
-    @users=User.all
+
+  def search
+    @search2 = User.ransack(params[:q])
+    @users = @search2.result(distinct: true).order(id: 'DESC').page(params[:page]).per(15)
+
   end
 
   private
